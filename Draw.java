@@ -13,7 +13,9 @@ public class Draw extends JPanel {
 
     int pSSN = playerSpeed;
 
+    boolean startScreen = false;
 
+    Gamepanel gp;
 
     Main main;
 
@@ -22,6 +24,7 @@ public class Draw extends JPanel {
 
     public Draw() {
         addKeyListener(k);
+
 
 
     Main.gameTimer = new Timer(10, new ActionListener() {
@@ -44,23 +47,33 @@ public class Draw extends JPanel {
            
         }
     });
+
+    if (gp.gameState == gp.titleScreen){
+        startScreen = true;
+    }else {
+        startScreen = false;
+    }
+
     Main.gameTimer.start();
-
-
-
-
-
-
-
-
 
 
     }
 
-        protected void paintComponent (Graphics g){
+        protected void paintComponent(Graphics g){
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
 
+             // draw Title Screen
+if (startScreen) {
+    g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 80F));
+    String text = "Capybara";
+    int x = gp.getWidth() / 2;
+    int y = gp.getHeight() / 2;
+
+    g2d.setColor(Color.white);
+    g2d.drawString(text, x, y);
+
+}
 
             g2d.fillRect(playerX, playerY, 50, 50);
             g2d.setColor(Color.white);
@@ -70,9 +83,10 @@ public class Draw extends JPanel {
             g2d.dispose();
 
 
+
+
+
         }
-
-
 
 
 

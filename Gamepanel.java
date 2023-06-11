@@ -10,6 +10,10 @@ public class Gamepanel extends JFrame{
 
     Main main;
 
+    int gameState = 0;
+    int titleScreen = 0;
+    int playerScreen = 1;
+
     public Gamepanel() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -22,10 +26,6 @@ public class Gamepanel extends JFrame{
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-
-
-
-
 
 
 
