@@ -23,8 +23,10 @@ public class Gamepanel extends JFrame{
 
         draw.setFocusable(true);
 
+
         pack();
         setLocationRelativeTo(null);
+        setResizable(false);
         setVisible(true);
 
 
