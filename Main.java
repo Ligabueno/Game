@@ -3,6 +3,15 @@ import java.awt.*;
 import javax.swing.Timer;
 public class Main {
 
+
+    // Idee für das Spiel:
+    //Man kann in den Settings die Farben ändern und umdrehen
+    // diese bestehen aus 1-Bit Farben
+
+    //Secret im Hauptmenü:
+    //unten rechts kann man aus dem Bildschirm und kommt in einen neuen
+    // secret mit Link
+
     int sek = 0;
     public static Dimension frameSize;
    public static Timer gameTimer;

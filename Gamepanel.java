@@ -8,6 +8,7 @@ public class Gamepanel extends JFrame{
 
     Draw draw = new Draw();
 
+
     Main main;
 
     int gameState = 0;
@@ -19,7 +20,7 @@ public class Gamepanel extends JFrame{
 
         add(draw);
         draw.setPreferredSize(new Dimension(main.frameSize));
-        draw.setBackground(Color.black);
+        draw.setBackground(new Color(34, 35,35));
 
         draw.setFocusable(true);
 
