@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 
+
 public class Draw extends JPanel {
     Main main;
 
@@ -43,6 +44,7 @@ public class Draw extends JPanel {
     int startS = 80;
     int settingsS = 80;
     int quitS = 80;
+    int sek = 0;
     String settings = "Settings";
     String quit = "Quit";
 
@@ -97,15 +99,16 @@ public class Draw extends JPanel {
         }
     });
 
+    Main.bTimer = new Timer(1000, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            sek++;
+        }
+    });
 
-
-
-    Main.gameTimer.start();
-
+            Main.gameTimer.start();
 
     }
-    
-
 
 
         protected void paintComponent(Graphics g){
@@ -123,8 +126,6 @@ public class Draw extends JPanel {
 
 
             g2d.setColor(new Color(240,246,240));
-            g2d.setFont(startF);
-            g2d.drawString(start, startX, startY);
             g2d.setFont(settingsF);
             g2d.drawString(settings, settingsX, settingsY);
             g2d.setFont(quitF);
@@ -133,16 +134,29 @@ public class Draw extends JPanel {
 
             Rectangle2D.Double player = new Rectangle2D.Double(playerX, playerY, playerWidth, playerHeight);
             g2d.fill(player);
-            // g2d.fillRect(playerX, playerY, playerWidth, playerHeight);
+
 
 
             if (player.intersects(startRect)){
+                Main.bTimer.start();
 
-                startS += 1;
-                System.out.println(startS);
+
+                if (sek <=2) {
+                    startS += 1;
+                    Font startF = getFont().deriveFont(Font.PLAIN, startS);
+                    g2d.setFont(startF);
+                    startX -= 1;
+                    g2d.drawString(start, startX, startY);
+
+                }
                 repaint();
-
             }
+            else{
+            sek = 0;
+                g2d.setFont(startF);
+            g2d.drawString(start, startX, startY);
+            startS = 80; }
+
             if (player.intersects(settingsRect)){
 
                 settingsS += 1;
@@ -156,6 +170,7 @@ public class Draw extends JPanel {
 
             }
 
+            System.out.println(sek);
             g2d.dispose();
 
 
@@ -164,7 +179,10 @@ public class Draw extends JPanel {
 
 
 
+}
 
 
 
-    }
+
+
+

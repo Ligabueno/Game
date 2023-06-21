@@ -12,11 +12,12 @@ public class Main {
     //unten rechts kann man aus dem Bildschirm und kommt in einen neuen
     // secret mit Link
 
-    int sek = 0;
+
     public static Dimension frameSize;
    public static Timer gameTimer;
+   public static Timer bTimer;
     int fps = 1000/60;
-
+    int sek = 0;
 
     public static void main(String[] args) {
 
