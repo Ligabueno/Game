@@ -115,10 +115,6 @@ public class Draw extends JPanel {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
 
-
-
-
-
             g2d.setColor(new Color(34, 35,35));
             Rectangle2D.Double startRect = new Rectangle2D.Double(startRectX,startRectY,startRectW,startRectH);
             Rectangle2D.Double settingsRect = new Rectangle2D.Double(settingsRectX, settingsRectY, settingsRectW,settingsRectH);
@@ -126,8 +122,6 @@ public class Draw extends JPanel {
 
 
             g2d.setColor(new Color(240,246,240));
-            g2d.setFont(settingsF);
-            g2d.drawString(settings, settingsX, settingsY);
             g2d.setFont(quitF);
             g2d.drawString(quit,quitX,quitY);
 
@@ -137,38 +131,82 @@ public class Draw extends JPanel {
 
 
 
+            if (player.intersects(settingsRect)&&player.intersects(startRect)||player.intersects(settingsRect)&&player.intersects(quitRect)) {
+                Main.bTimer.stop();
+                sek = 0;
+                settingsS= 80;
+                startS = 80;
+                quitS = 80;
+            }
             if (player.intersects(startRect)){
+
                 Main.bTimer.start();
 
 
-                if (sek <=2) {
+                if (sek >=2 && sek <=4) {
                     startS += 1;
                     Font startF = getFont().deriveFont(Font.PLAIN, startS);
                     g2d.setFont(startF);
                     startX -= 1;
                     g2d.drawString(start, startX, startY);
-
+                }
+                else {
+                    g2d.drawString(start, startX, startY);
                 }
                 repaint();
-            }
-            else{
+
+                if (sek >= 4){
+
+                }
+
+            } else if (player.intersects(settingsRect)){
+
+                Main.bTimer.start();
+                if (sek >=2 && sek <=4) {
+                    settingsS += 1;
+                    Font settingsF = getFont().deriveFont(Font.PLAIN, settingsS);
+                    g2d.setFont(settingsF);
+                    settingsX -= 2;
+                    g2d.drawString(settings, settingsX, settingsY);
+                }
+                else {
+                    g2d.drawString(settings, settingsX, settingsY);
+                }
+                repaint();
+
+
+            } else if (player.intersects(quitRect)) {
+                Main.bTimer.start();
+                if (sek >=2 && sek <=4) {
+                    quitS += 1;
+                    Font quitF = getFont().deriveFont(Font.PLAIN, quitS);
+                    g2d.setFont(quitF);
+                    quitX -= 1;
+                    g2d.drawString(quit, quitX, quitY);
+                }
+                else {
+                    g2d.drawString(quit, quitX, quitY);
+                }
+                repaint();
+                
+            } else{
+
             sek = 0;
-                g2d.setFont(startF);
+            g2d.setFont(startF);
             g2d.drawString(start, startX, startY);
-            startS = 80; }
-
-            if (player.intersects(settingsRect)){
-
-                settingsS += 1;
-                repaint();
-
+            startS = 80;
+            g2d.setFont(settingsF);
+            g2d.drawString(settings, settingsX, settingsY);
+            settingsS = 80;
+            Main.bTimer.stop();
             }
-            if (player.intersects(quitRect)){
 
-                quitS += 1;
-                repaint();
 
-            }
+
+
+
+
+
 
             System.out.println(sek);
             g2d.dispose();
