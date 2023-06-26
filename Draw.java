@@ -3,70 +3,34 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
-
+import java.awt.Font;
 
 public class Draw extends JPanel {
-    Main main;
-
-
+    
+    Main main;  
+    Gamepanel gp;
     Keyhandler k = new Keyhandler();
-
+  
     int playerX = 100;
     int playerY = 100;
     int playerSpeed = 4;
-    int playerWidth = 50, playerHeight = 50;
+  
+   int startX = main.frameSize.width/2-(125);
+   int startY = main.frameSize.height/2-(100);
+  
+   // double playerSpeedSide = Math.sqrt((playerSpeed*playerSpeed)/2);
 
-    int startX = main.frameSize.width/2 - 110;
-    int startY = main.frameSize.height/2 ;
+   // int pSSN = playerSpeed;
 
-    int settingsY = startY + main.frameSize.height/6;
-    int settingsX = startX - 50;
-
-    int quitX = startX + 15;
-    int quitY = settingsY + main.frameSize.height/6;
-
-    int startRectX = startX + 4;
-    int startRectY = startY - 60;
-    int startRectW = 164;
-    int startRectH = 61;
-    int settingsRectX = settingsX + 4;
-    int settingsRectY = settingsY - 60;
-    int settingsRectW = 282;
-    int settingsRectH = 77;
-    int quitRectX = quitX + 4;
-    int quitRectY = quitY - 60;
-    int quitRectW = 142;
-    int quitRectH = 64;
-
-
-
-    String start = "Start";
-    int startS = 80;
-    int settingsS = 80;
-    int quitS = 80;
-    int sek = 0;
-    String settings = "Settings";
-    String quit = "Quit";
-
-
-    Font startF = getFont().deriveFont(Font.PLAIN, startS);
-    Font settingsF = getFont().deriveFont(Font.PLAIN, settingsS);
-    Font quitF = getFont().deriveFont(Font.PLAIN, quitS);
-
-
-
-
-
-
+   
     public Draw() {
         addKeyListener(k);
 
 
 
-
     Main.gameTimer = new Timer(10, new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent e) {                          //Steruerung
+        public void actionPerformed(ActionEvent e) {
             if (k.upPressed == true) {
                 playerY -= playerSpeed;
             } else if (k.downPressed == true) {
@@ -75,152 +39,42 @@ public class Draw extends JPanel {
                 playerX -= playerSpeed;
             } else if (k.rightPressed == true) {
                 playerX += playerSpeed;
-            }
-
-
-            if (playerX <= 0){                                                      // Sorgt dafür, das der Spieler nicht aus dem Sichtfeld läuft.
-                playerX = 0;
-            }
-            if (playerY <= 0) {
-                playerY = 0;
-            }
-            if (playerX >= main.frameSize.width-playerWidth) {
-                playerX = main.frameSize.width-playerWidth;
-            }
-            if (playerY >= main.frameSize.height-playerHeight) {
-              playerY = main.frameSize.height-playerHeight;
-            }
-
-            //System.out.println(playerX+"|"+playerY);
-
+            }// else if (k.upPressed == true && k.leftPressed == true) {
+               // playerX -= pSSN;
+                //playerY -= pSSN;
+            //}
 
             repaint();
            
         }
     });
 
-    Main.bTimer = new Timer(1000, new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            sek++;
-        }
-    });
+    main.gameTimer.start();
 
-            Main.gameTimer.start();
 
     }
-
 
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-
-            g2d.setColor(new Color(34, 35,35));
-            Rectangle2D.Double startRect = new Rectangle2D.Double(startRectX,startRectY,startRectW,startRectH);
-            Rectangle2D.Double settingsRect = new Rectangle2D.Double(settingsRectX, settingsRectY, settingsRectW,settingsRectH);
-            Rectangle2D.Double quitRect = new Rectangle2D.Double(quitRectX,quitRectY,quitRectW,quitRectH);
-
-
-            g2d.setColor(new Color(240,246,240));
-            g2d.setFont(quitF);
-            g2d.drawString(quit,quitX,quitY);
-
-
-            Rectangle2D.Double player = new Rectangle2D.Double(playerX, playerY, playerWidth, playerHeight);
-            g2d.fill(player);
-
-
-
-            if (player.intersects(settingsRect)&&player.intersects(startRect)||player.intersects(settingsRect)&&player.intersects(quitRect)) {
-                Main.bTimer.stop();
-                sek = 0;
-                settingsS= 80;
-                startS = 80;
-                quitS = 80;
-            }
-            if (player.intersects(startRect)){
-
-                Main.bTimer.start();
-
-
-                if (sek >=2 && sek <=4) {
-                    startS += 1;
-                    Font startF = getFont().deriveFont(Font.PLAIN, startS);
-                    g2d.setFont(startF);
-                    startX -= 1;
-                    g2d.drawString(start, startX, startY);
-                }
-                else {
-                    g2d.drawString(start, startX, startY);
-                }
-                repaint();
-
-                if (sek >= 4){
-
-                }
-
-            } else if (player.intersects(settingsRect)){
-
-                Main.bTimer.start();
-                if (sek >=2 && sek <=4) {
-                    settingsS += 1;
-                    Font settingsF = getFont().deriveFont(Font.PLAIN, settingsS);
-                    g2d.setFont(settingsF);
-                    settingsX -= 2;
-                    g2d.drawString(settings, settingsX, settingsY);
-                }
-                else {
-                    g2d.drawString(settings, settingsX, settingsY);
-                }
-                repaint();
-
-
-            } else if (player.intersects(quitRect)) {
-                Main.bTimer.start();
-                if (sek >=2 && sek <=4) {
-                    quitS += 1;
-                    Font quitF = getFont().deriveFont(Font.PLAIN, quitS);
-                    g2d.setFont(quitF);
-                    quitX -= 1;
-                    g2d.drawString(quit, quitX, quitY);
-                }
-                else {
-                    g2d.drawString(quit, quitX, quitY);
-                }
-                repaint();
-                
-            } else{
-
-            sek = 0;
-            g2d.setFont(startF);
-            g2d.drawString(start, startX, startY);
-            startS = 80;
-            g2d.setFont(settingsF);
-            g2d.drawString(settings, settingsX, settingsY);
-            settingsS = 80;
-            Main.bTimer.stop();
-            }
-
-
-
-
-
-
-
-
-            System.out.println(sek);
+    
+    
+    
+    
+    g2d.setColor(Color.white);
+    g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 80F));
+    g2d.drawString("START", startX, startY); 
+    
+    
+    
+                                     
+            g2d.fillRect(playerX, playerY, 50, 50);
+            g2d.setColor(Color.white);
+            //Rectangle2D.Double player = new Rectangle2D.Double(playerX, playerY, 50, 50);
+           // g2d.setColor(Color.white);
+           // g2d.fill(player);
             g2d.dispose();
-
-
 
         }
 
-
-
-}
-
-
-
-
-
-
+    }
